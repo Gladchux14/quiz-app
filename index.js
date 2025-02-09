@@ -34,23 +34,35 @@ const nextButton = document.querySelector("#next-btn");
 const startButton  = document.querySelector(".startButton");
 const quizContainer  = document.querySelector(".app");
 const doneSection = document.querySelector(".done");
+const progressIndicator = document.querySelector(".progress-indicator");
+const currentQuestionDisplay = document.getElementById("current-question");
+const totalQuestionsDisplay = document.getElementById("total-questions");
+const subHeading = document.querySelector(".sub-heading");
+const reStart = document.querySelector("#restart-btn");
 let answeredQuestions = new Set();
 
 
 nextButton.style.display  = "none";
-doneSection.style.display="none"
+doneSection.style.display="none";
+progressIndicator.style.display = "none";
+subHeading.style.display  = "none";
+
+totalQuestionsDisplay.textContent = data.length;
 
 
 function startQuiz() {
     startButton.style.display = "none";
     questionDisplay.style.display = "block";
     nextButton.style.display = "block";
-    doneSection.style.display="none"
+    progressIndicator.style.display = "block";
+    doneSection.style.display="none";
+    subHeading.style.display  = "block";
+
     displayCurrentQuestion();
 }
 
 function displayCurrentQuestion(){
-    // let currentQuestion = data[data.length - i]
+  
     questionDisplay.innerHTML = " ";
  
     const currentQuestion = data[currentQuestionIndex];
@@ -61,22 +73,19 @@ function displayCurrentQuestion(){
     const optionsContainer  = document.createElement("div");
     optionsContainer.classList = "option";
     displayOptions(currentQuestion.Options, optionsContainer, currentQuestion.correctAnswer)
-    questionDisplay.appendChild(optionsContainer)
+    questionDisplay.appendChild(optionsContainer);
+
+    currentQuestionDisplay.textContent = currentQuestionIndex + 1;
 }
 
 function displayOptions(options, optionsContainer, correctAnswer){
     for (let i = 0; i < options.length; i++ ){
         let button  = document.createElement("button")
         button.classList.add("btn");
-        // button.classList  = "btn" + i
         button.textContent = options[i]
         button.addEventListener("click", (e) =>{
             e.preventDefault()
             const value  = e.target.textContent;
-            // const questionText  = optionsContainer.parentElement.querySelector("p").textContent;
-            // if(!answeredQuestions.has(questionText)){
-                // answeredQuestions.add(questionText);
-                // console.log(value  === correctAnswer)
                if (value  === correctAnswer ){
                 score ++; 
                 console.log(score.textContent);
@@ -96,6 +105,17 @@ function displayOptions(options, optionsContainer, correctAnswer){
     }
 // } 
 
+function reStartQuiz (){
+    currentQuestionIndex = 0;
+    score = 0;
+    scoreDisplay.textContent = score;
+
+    doneSection.style.display = none;
+    startButton.style.display = block;
+    currentQuestionDisplay.textContent = 1;
+    questionDisplay.innerHTML = "";
+}
+
 function nextQuestion(){
     currentQuestionIndex++;
     if(currentQuestionIndex < data.length){
@@ -105,11 +125,14 @@ function nextQuestion(){
       questionDisplay.style.display = "none" ;
        nextButton.style.display = "none";
        doneSection.style.display = "block"; 
-
+       progressIndicator.style.display = "none";
+       subHeading.style.display  = "none";
     }
 }
 
 startButton.addEventListener("click", startQuiz);
 
 nextButton.addEventListener("click", nextQuestion);
+
+reStart.addEventListener("click", reStartQuiz);
 

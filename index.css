@@ -31,7 +31,13 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     color: white;
+}
+
+.progress-indicator{
+    font-size: 24px;
+    color:  rgb(150, 182, 150);
 }
 
 .startButton{
@@ -64,6 +70,20 @@ body{
     font-size: 20px;
     border-radius: 7px;
     background-color: rgb(150, 182, 150);
+}
+
+.done{
+    color: white;
+    font-size: 24px;
+}
+
+#restart-btn{
+    padding: 6px 8px 6px 8px;
+    border-radius: 7px;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: rgb(150, 182, 150) 
 }
 /* 
 .option{
