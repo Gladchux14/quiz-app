@@ -27,33 +27,89 @@ data = [
 ]
 
 let currentQuestionIndex = 0;
-let score = document.querySelector(".score");
-const displayquestion  = document.querySelector(".question")
+let score  = 0;
+const scoreDisplay = document.querySelector(".score");
+const questionDisplay = document.querySelector(".question");
+const nextButton = document.querySelector("#next-btn");
+const startButton  = document.querySelector(".startButton");
+const quizContainer  = document.querySelector(".app");
+const doneSection = document.querySelector(".done");
+let answeredQuestions = new Set();
 
-for (let i = data.length; i > 0; i--){
-    let currentQuestion = data[data.length - i]
-    let questionTitle  = document.createElement("p")
+
+nextButton.style.display  = "none";
+doneSection.style.display="none"
+
+
+function startQuiz() {
+    startButton.style.display = "none";
+    questionDisplay.style.display = "block";
+    nextButton.style.display = "block";
+    doneSection.style.display="none"
+    displayCurrentQuestion();
+}
+
+function displayCurrentQuestion(){
+    // let currentQuestion = data[data.length - i]
+    questionDisplay.innerHTML = " ";
+ 
+    const currentQuestion = data[currentQuestionIndex];
+    const questionTitle  = document.createElement("p")
+    questionTitle.classList = "tittle";
     questionTitle.textContent = currentQuestion.question
-    displayquestion.appendChild(questionTitle)
-    let optionsContainer  = document.createElement("div")
+    questionDisplay.appendChild(questionTitle);
+    const optionsContainer  = document.createElement("div");
+    optionsContainer.classList = "option";
     displayOptions(currentQuestion.Options, optionsContainer, currentQuestion.correctAnswer)
-    displayquestion.appendChild(optionsContainer)
+    questionDisplay.appendChild(optionsContainer)
 }
 
 function displayOptions(options, optionsContainer, correctAnswer){
     for (let i = 0; i < options.length; i++ ){
         let button  = document.createElement("button")
-        button.classList  = "btn"
+        button.classList.add("btn");
+        // button.classList  = "btn" + i
         button.textContent = options[i]
         button.addEventListener("click", (e) =>{
             e.preventDefault()
-            const value  = e.target.textContent
-            console.log(value  === correctAnswer)
-           if (value  === correctAnswer ){
-            console.log(score.textContent)
-            score.textContent = parseInt(score.textContent)  + 1 
-           }
-        })
-        optionsContainer.appendChild(button)
+            const value  = e.target.textContent;
+            // const questionText  = optionsContainer.parentElement.querySelector("p").textContent;
+            // if(!answeredQuestions.has(questionText)){
+                // answeredQuestions.add(questionText);
+                // console.log(value  === correctAnswer)
+               if (value  === correctAnswer ){
+                score ++; 
+                console.log(score.textContent);
+                scoreDisplay.textContent = score;
+                score.textContent = parseInt(score.textContent)  + 1 ;
+                e.target.style.backgroundColor = '#4CAF50';
+               }else{
+                e.target.style.backgroundColor = '#f44336';
+               }
+
+               const allButtonsInQuestion  = optionsContainer.querySelectorAll(".btn");
+               allButtonsInQuestion.forEach(btn => btn.disabled = true); 
+                nextButton.disabled  = false;
+               });
+               optionsContainer.appendChild(button);
+        }
     }
-} 
+// } 
+
+function nextQuestion(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < data.length){
+        displayCurrentQuestion();
+        nextButton.disabled = true;
+    }else {
+      questionDisplay.style.display = "none" ;
+       nextButton.style.display = "none";
+       doneSection.style.display = "block"; 
+
+    }
+}
+
+startButton.addEventListener("click", startQuiz);
+
+nextButton.addEventListener("click", nextQuestion);
+

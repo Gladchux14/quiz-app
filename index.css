@@ -1,5 +1,72 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
+
+.app{
+    margin-top: 8rem;
+    display: grid;
+    padding: 3rem;
+    align-items: center;
+     width: 550px;
+     height: 60vh;
+    justify-items: center;
+    justify-content: center;
+   background-color: rgb(37, 73, 37);
+   border-radius: 7px;
+}
+
+.quiz{
+    color: rgb(150, 182, 150);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sub-heading{
+    font-size: 28px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.startButton{
+    padding: 16px 28px 16px 28px ;
+    font-size: 24px;
+    border-radius: 7px;
+}
+
+.question{
+    color: white;
+    font: 30px;
+    text-align: center;
+}
 
 .btn{
-    color:blue
+    background: white;
+    margin: 6px;
+    color:black;
+    font-size: 24px;
+    padding: 6px;
+    border-radius: 7px;
 }
+
+.tittle{
+    font-size: 32px;
+}
+
+#next-btn{
+    padding: 12px 22px 12px 22px ;
+    font-size: 20px;
+    border-radius: 7px;
+    background-color: rgb(150, 182, 150);
+}
+/* 
+.option{
+    gap: 30px;
+    margin-right: 30px;
+} */
